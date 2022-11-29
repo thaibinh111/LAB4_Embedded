@@ -6,7 +6,6 @@
 #include "esp_system.h"
 #include "esp_spi_flash.h"
 #include "freertos/queue.h"
-#include "esp_random.h"
 
 
 static const uint32_t queue_length = 4;
@@ -42,9 +41,8 @@ void receptional_task(void *pvParameter){
             break;           
       }
       xQueueSend(aQueue, &inputMessage, 10);
-      //if(taskID >= 4) taskID = 1;
-      taskID = (int)(esp_random());
-      printf("%d\n", taskID);
+      if(taskID >= 4) taskID = 1;
+      else taskID++;
       vTaskDelay(1000 / portTICK_RATE_MS);
    }
    vTaskDelete(NULL);
